@@ -1,43 +1,43 @@
     .data
-aportantes:
-    .byte 66, 40
-    .half 5000
-    .byte 32, 30
-    .half -500
-    .byte 70, 33
-    .half -1000
-    .byte 70, 20
-    .half 200
-largo:
-    .byte 4
-    .text
-    la t0, aportantes
-    la t1, largo
-    lb t1, 0(t1) #largo
+tablaCalificaciones:
+        .half 5523
+        .byte 3
+        .half 8732
+        .byte 6
+        .half 8437
+        .byte 3
+        .half 3423
+        .byte 7
+        .half 0
+        
+        .globl main
+        .text
+main:
+    la a0, tablaCalificaciones
+    jal sumaNotaIdImpar
+    mv a1, a0
+    li a7, 1
+    ecall
+    ret
+    
+    
+sumaNotaIdImpar:
     li t2, 0 #contador
-    li t3, 0 #acumulador
-    li t4, 0 #indice
-    li a1, 65
-    
+    mv t3, a0
 while:
-    bge t4, t1, return
-    slli t6, t4, 2
-    add t6, t0, t6
-    lb t5, 0(t6)
-    bge t5, a1, acumular
-    j cont
-    
-acumular:
-    lh t5, 2(t6)
-    add t3, t3, t5
-    addi t2, t2, 1
-
+    lh t0, 0(t3)
+    beqz t0, done
+    andi t1, t0, 1
+    bnez t1, esImpar
+   
 cont:
-    addi t4, t4, 1
+    addi t3, t3, 3
     j while
-return:
-    div a0, t3, t2
-fin:
-    j fin
     
-  
+esImpar:
+    lbu t1, 2(t3)
+    add t2, t2, t1
+    j cont
+done:
+    mv a0, t2
+    ret
