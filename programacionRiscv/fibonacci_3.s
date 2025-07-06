@@ -24,7 +24,7 @@ fibonacci_3:
     li t2, 2
     beq a0, zero, casoBase0
     beq a0, t1, casoBase1
-    beq a0, t2,, casoBase2
+    beq a0, t2, casoBase2
     
     #--------------- F3(n-1) ----------------
     addi  a0, a0, -1         # a0 = n-1
